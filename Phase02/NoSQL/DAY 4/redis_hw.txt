@@ -1,0 +1,59 @@
+
+#01
+set 123 peter
+
+
+#02
+rpush  416 MonoDB
+rpush  416 Redis
+rpush  416 Cassendra
+rpush  416 neo4j
+rpush  416 sqlserver
+
+lrem 416 1 Cassendra
+
+
+#03
+sadd A a b c
+sadd B c d e f
+sinterstore C A B
+get C
+
+
+#04
+zadd db 1 MonoDB
+zadd db 2 Redis
+zadd db 3 Cassendra
+zadd db 4 neo4j
+zadd db 5 sqlserver
+
+zadd country xx ch 1 Cassendra
+
+
+#05
+hmset users:user id 123 fname peter lname potros birthday 18/4 email pp123@email.com
+hdel users:user email
+hgetall users:user
+
+
+#06
+SUBSCRIBE first
+
+PUBLISH first 'Hello world'
+
+
+#07
+
+set 111 peter
+expire 111 10
+persist 111
+
+
+
+#08
+set 100 peter
+multi
+pexpire 100 10
+persist 100
+exec
+

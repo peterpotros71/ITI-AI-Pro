@@ -1,0 +1,100 @@
+
+#01
+use usermanaged
+db
+
+#02
+db.customers.insertOne( {
+  "firstName":"John",
+  "lastName":"West",
+  "email":"john.west@mail.com",
+  "phone":"032345432134",
+  "BusinessType": ["Sell", "Sugar", "Drinks"],
+  "Reference":100,
+  "Company":"Coca-Cola&quot;
+ } )
+ 
+#03
+mongoimport --db=usermanaged --collection=transaction --jsonArray --file="C:\Users\hp\ITI\phase 2\No SQL\DAY 2\Mongo_EX3.1.json"
+
+mongoimport --db=usermanaged --collection=transaction --upsert --upsertFields Id --jsonArray --file="C:\Users\hp\ITI\phase 2\No SQL\DAY 2\Mongo_EX3.3.json"
+
+ 
+#04
+mongoimport --type csv --db=usermanaged --collection=products --headerline --file="C:\Users\hp\ITI\phase 2\No SQL\DAY 2\products.csv" --jsonArray
+ 
+ 
+#5-1. Find any record where Name is Tom 
+db.transaction.find(
+    { Name: "Tom" }
+)
+
+#5-2. Find any record where total payment amount (Payment.Total) is 400.
+db.transaction.find(
+    { "Payment.Total": 400 }
+)
+
+#5-3. Find any record where price (Transaction.price) is greater than 400.
+db.transaction.find(
+    { "Transaction.price": {$gt:400} }
+)
+
+#5-4. Find any record where Note is null or the key itself is missing.
+db.transaction.find({ $or:[{ Note:{$in[null]}}, {Note:{$exists: false }}] })
+
+#5-5. Find any record where Note exists and its value is null.
+db.transaction.find( { Note:{$in[null], { $exists: true }} )
+
+
+#5-6. Find any record where the Note key does not exist.
+db.transaction.find( {Note:{$exists: false }} )
+
+
+#7-1
+db.transaction.insertOne(
+{
+   "Id": 110,
+    "Name": "Inserted Record",
+    "TransactionId": "tranNew1",
+  "Transaction": [
+    {
+    "ItemId":"c324",
+    "price": 456
+    },
+    {
+    "ItemId":"d456",
+    "price": 543  
+    }
+  ],
+  "Subscriber": false,
+  "Payment": {
+    "Type": "Debit-Card",
+    "Total": 999,
+    "Success": true
+  },
+   "Note":'Hello World'
+}
+
+)
+
+
+#7-2. Updating the new inserted record above. Make Name=’Updated Record’ & Note=’Updated!’
+db.transaction.updateOne( { Id: 110 }, { $set: { Name: "Updated Record", Note: "Updated" }  })
+
+#7-3. Delete the record inserted above by using Id.
+db.transaction.deleteOne( { Id: 110 } )
+
+
+#8_1
+db.createUser({user:"peter", pwd:"123456789", roles:["readAnyDatabase"]})
+
+#8_2
+db.createUser({user: "pp", pwd: "password", roles: [{role: "readWrite", db:"usermanaged"}]})
+
+#8_3
+db.createUser({user:"user", pwd:"123456789", "roles" : [
+   { "role" : "readWrite", "db" : "accounts" },
+   { "role" : "read", "db" : "test" },
+   { "role" : "read", "db" : "admin" },
+]})
+

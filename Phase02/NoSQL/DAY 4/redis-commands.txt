@@ -1,0 +1,127 @@
+https://redis.io/commands#string searching for any command
+https://www.codegrepper.com/code-examples/shell/show+all+keys+in+all+databases+redis
+127.0.0.1:6379> 
+-ping
+-echo "hello from redis"  
+-quit  or ctrl+c
+String commands
+------------
+-set city bangalore
+-get city
+-append city ", India"  
+-get city
+-del city
+-get city
+-mset key1 val1 key2 val2 key3 val3
+-mget key1 key2 key3
+-setnx city "den haag"
+-setnx city "blore"  
+-strlen city
+-set counter 100
+-get counter
+-incr counter
+-incrby counter 5
+-decr counter
+-decrby counter 10
+-------------------
+list commands
+rpush cities blore
+rpush cities chennai
+rpush cities mumbai
+lrange cities 0 3
+lrange cities 0 -1
+lindex cities 1
+rpush cities mumbai
+lrange cities 0 4
+lpush cities chennai
+lrange cities 0 5
+lrange cities 0 5
+rpop cities
+lrange cities 0 5
+rpop cities
+lrange cities 0 5
+-----Set – command examples----
+sadd ucities chennai kolkata blore
+sadd ucities2 delhi
+smembers ucities2
+sismember ucities2 blore
+sismember ucities2 hyderabad
+sadd ucities blore
+srem ucities2 blore
+smembers ucities
+srem ucities blore
+-----Hash – command examples--------
+hset users2:Sata name "Satya Nadela"
+hset users2:Sata age 45
+hset users2:Sata email satya.m@ms.com
+hget users2:Sata email
+hgetall users:Sata
+hdel users2:Sata email
+hgetall users2:Sata
+hkeys users2:Sata
+hvals users2:Sata
+hincrby users2:Sata age 5
+hget users2:Sata age
+hgetall users2:Sata
+hlen users:Sata
+hexists users2:Sata name
+hexists users2:Sata email
+hmset users2:Sunder name "Sunder P" age 43 designation CEO
+hmset users2:XYZ name "XYZ PQR" age 21 designation Engineer email xyz@gmail.com mobile"+(91) 12345 67890"
+keys users2*
+----Sorted Set (ZSET) – command examples--
+zadd city_rankings 1 'New York'
+zadd city_rankings 2 'Minneapolis'
+zadd city_rankings 3 'Bangalore'
+zadd city_rankings 4 'Amsterdam'
+zadd city_rankings 5 'Warshaw'
+zrange city_rankings 0 -1
+zrangebyscore city_rankings 2 4
+zrem city_rankings bangalore
+zrem city_rankings Bangalore
+zrange city_ranking 0 -1
+zcard city_ranking
+---------Other Commands
+keys *
+keys user*
+----Server related commands
+info
+dbsize
+----Database in redis
+set city bangalore
+select 1
+keys *
+set city kolkata
+get city
+select 0
+get city
+dbsize
+-----Expiry---
+set emsg2 Hello
+expire emsg2 30
+ttl emsg
+get emsg
+----Transaction--
+set debit_account2 120000
+set credit_account2 40000
+multi
+decrby debit_account2 30000
+incrby credit_account2 30000
+exec
+
+set debit_account 120000
+set credit_account 40000
+multi
+decrby debit_account 30000
+incrby credit_account 30000
+discard
+get debit_account
+get credit_account
+---Mass insertion---
+from cmd not the shell
+type initial_data.txt | redis-cli --pipe
+what about csv or json 
+
+
+
+

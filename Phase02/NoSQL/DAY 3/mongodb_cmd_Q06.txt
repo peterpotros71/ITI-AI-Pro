@@ -1,0 +1,74 @@
+
+use usermanaged
+
+#6-1. Calculate the total transaction amount by adding up Payment.Total in all records.
+db.transaction.aggregate( [
+   {
+     $group: {
+        _id: null,
+        total: { $sum: "$Payment.Total" }
+     }
+   }
+] )
+
+
+
+
+#6-2. Get the total price per record by adding up the price values in the Transaction array (Transaction.price).
+db.transaction.aggregate([
+   {
+     $project: {
+       trans_per_person: { $sum: "$Transaction.price"}
+	   }
+   }
+])
+
+#to calculate the total price for all transactions
+db.transaction.aggregate([
+   {
+     $project: {
+       trans_per_person: { $sum: "$Transaction.price"}
+	   }
+   },
+   {$group: {
+        _id: null,
+        total: { $sum: "$trans_per_person" }
+     }
+   }
+])
+
+
+
+
+#6-3. Calculate total payments (Payment.Total) for each payment type (Payment.Type).
+db.transaction.aggregate( [
+   {
+     $group: {
+        _id: "$Payment.Type",
+        total: { $sum: "$Payment.Total" }
+     }
+   }
+] )
+
+#6-4. Find the max Id.
+db.transaction.aggregate( [
+   {
+     $group: {
+        _id: null,
+        max_id: { $max: "$Id" }
+     }
+   }
+] )
+
+
+
+
+#6-5. Find the max price (Transaction.price).
+db.transaction.aggregate( [
+   {
+     $group: {
+        _id: null,
+        max_price: { $max: "$Transaction.price" }
+     }
+   }
+] )

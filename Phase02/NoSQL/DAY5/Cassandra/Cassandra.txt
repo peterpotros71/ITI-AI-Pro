@@ -1,0 +1,90 @@
+Cassandra CQLsh stands for Cassandra CQL shell.
+
+1-DDL for Cassandra DB/keyspace
+CREATE KEYSPACE G2DB WITH replication = {'class':'SimpleStrategy','replication_factor':1};
+
+2-Cassandra Table Operations DDL (create , alter, drop)
+> USE G2DB;
+cqlsh:G2DB>CREATE TABLE emp(
+   emp_id int PRIMARY KEY,
+   emp_name text,
+   emp_city text,
+   emp_sal varint,
+   emp_phone varint
+   );
+--check with select stmt
+>ALTER TABLE emp
+     ... add emp_email text;
+> DROP TABLE emp;
+> DESCRIBE COLUMNFAMILIES;
+> TRUNCATE student;
+
+> CREATE INDEX name ON emp1 (emp_name);
+
+
+---Cassandra CURD Operations(insert, update, delete)
+INSERT INTO emp (emp_id, emp_name, emp_city,
+   emp_phone, emp_sal) VALUES(1,'ram', 'Hyderabad', 9848022338, 50000);
+
+INSERT INTO emp (emp_id, emp_name, emp_city,
+   emp_phone, emp_sal) VALUES(2,'robin', 'Hyderabad', 9848022339, 40000);
+
+INSERT INTO emp (emp_id, emp_name, emp_city,
+   emp_phone, emp_sal) VALUES(3,'rahman', 'Chennai', 9848022330, 45000);
+
+UPDATE emp SET emp_city='Delhi',emp_sal=50000
+   WHERE emp_id=2;
+
+select * from emp
+SELECT emp_name, emp_sal from emp;
+
+---Cassandra Collection Types--(list-set-map)
+
+CREATE TABLE data(name text PRIMARY KEY, email list<text>);
+
+INSERT INTO data(name, email) VALUES ('ramu',
+['abc@gmail.com','cba@yahoo.com'])
+
+UPDATE data SET email = email +['xyz@tutorialspoint.com'] where name = 'ramu';
+
+CREATE TABLE data2 (name text PRIMARY KEY, phone set<varint>);
+INSERT INTO data2(name, phone)VALUES ('rahman',{9848022338,9848022339});
+
+UPDATE data2
+   SET phone = phone + {9848022330}
+   where name = 'rahman';
+
+UPDATE data2
+   SET phone[0] ={9848022330}
+   where name = 'rahman';
+
+
+CREATE TABLE data3 (name text PRIMARY KEY, address
+map<timestamp, text>);
+
+
+INSERT INTO data3 (name, address) VALUES ('robins', {'2021-08-11' : 'hyderabads' , '2021-09-11' : 'Delhis' } );
+
+UPDATE data3
+   SET address = address+{'2031-08-11':'mumbai'}
+   WHERE name = 'robin';
+
+-- show all data bases--
+DESCRIBE keyspaces;
+
+--------------------------- partition key and cluster--
+create tables with different settings for a to-do list application
+CREATE KEYSPACE learn_cassandra
+  WITH REPLICATION = { 
+   'class' : 'NetworkTopologyStrategy',
+   'datacenter1' : 3 
+  };
+
+CREATE TABLE learn_cassandra.users_by_country (
+    country text,
+    user_email text,
+    first_name text,
+    last_name text,
+    age smallint,
+    PRIMARY KEY ((country), user_email)
+);
