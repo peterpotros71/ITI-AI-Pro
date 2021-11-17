@@ -1,0 +1,34 @@
+--1 Write a query to get Product name and quantity/unit 
+-- SELECT product_name, quantity_per_unit FROM products;
+
+--2 Write a query to get current Product list (Product ID and name)
+-- SELECT product_id, product_name FROM products WHERE discontinued = 0 ORDER BY product_name;
+
+--3 Write a query to get most expense and least expensive Product list (name and unit price)
+-- SELECT product_name, unit_price FROM products ORDER BY unit_price DESC;
+-- SELECT product_name, unit_price FROM products ORDER BY unit_price ASC;
+
+--4 Write a query to get Product list (id, name, unit price) where current products cost less than $20
+-- SELECT product_id, product_name, unit_price FROM products WHERE unit_price < 20 ORDER BY unit_price DESC;
+
+--5 Write a query to get Product list (id, name, unit price) WHERE products cost between $15 and $25.
+-- SELECT product_id, product_name, unit_price FROM products WHERE unit_price between 15 and 25 ORDER BY unit_price DESC;
+
+--6 Write a query to get Product list (name, unit price) of above average price
+-- SELECT product_id, product_name, unit_price FROM products WHERE unit_price > (SELECT AVG (unit_price) FROM products);
+
+--7 Write a query to get Product list (name, unit price) of ten most expensive products
+-- SELECT product_name, unit_price FROM products ORDER BY unit_price DESC LIMIT 10;
+
+--8  Make a list of categories and suppliers who supply products within those categories. 
+-- select * from categories;
+
+--9 Make a complete list of customers, the OrderID and date of any orders they have made. Include customers who have not placed any orders. 
+-- select * from orders;
+ 
+--10 Make a complete list of customers along with the number of orders they have placed. 
+--select * from customers;
+
+--11 Create a parameterized query that has the user enter a city and then list the customers or suppliers from that city. 
+
+
