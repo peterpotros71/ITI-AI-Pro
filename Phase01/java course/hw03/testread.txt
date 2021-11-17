@@ -1,0 +1,2 @@
+hello peter
+this is a test read and copy operation
